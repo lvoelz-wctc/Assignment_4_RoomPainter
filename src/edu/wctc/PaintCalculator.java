@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class PaintCalculator implements Serializable {
     private ArrayList<Room> roomList = new ArrayList<>();
+    private int roomNum = 1;
 
     public void addRoom(double length, double width, double height){
         Room r = new Room(width, height, length);
@@ -19,7 +20,8 @@ public class PaintCalculator implements Serializable {
         }
         else {
             for (Room i : roomList){
-                roomAreas = roomAreas + i.toString() + " ";
+                roomAreas = roomAreas + "Room " + roomNum + ": " + i.toString() + " ";
+                roomNum = roomNum + 1;
             }
             return roomAreas;
         }

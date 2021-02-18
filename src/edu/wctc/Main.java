@@ -1,15 +1,13 @@
 package edu.wctc;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
     private static Scanner keyboard = new Scanner(System.in);
     private static PaintCalculator paintcalculator = new PaintCalculator();
-    private static boolean loop;
+    private static boolean loop = true;
 
     private static void printMenu(){
         //prints menu options
@@ -45,15 +43,32 @@ public class Main {
     }
 
     private static void readFile(){
-        //reads a file.
+        // Read the binary file into paintcalculator
+        try (
+                FileInputStream fis = new FileInputStream("paintcalculator.obj");
+                ObjectInputStream ois = new ObjectInputStream(fis);
+        ) {
+            paintcalculator = (PaintCalculator)ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Rooms read from file.");
     }
 
     private static void writeFile() throws IOException {
-        //writes paint calculator field to a file. exception handling to print an error if unwriteable.
+        // Write object list as binary file
+        try (
+                FileOutputStream fos = new FileOutputStream("paintcalculator.obj");
+                ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(paintcalculator);
+            System.out.println("Rooms written to file.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
     do {
         printMenu();
 
@@ -65,10 +80,10 @@ public class Main {
             System.out.println(paintcalculator.toString());
         }
         else if (response.equals("R")){
-            System.out.println("Read rooms");
+            readFile();
         }
         else if (response.equals("W")){
-            System.out.println("Write rooms");
+            writeFile();
         }
         else if (response.equals("E")){
             loop = false;
