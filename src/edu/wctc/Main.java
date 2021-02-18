@@ -13,11 +13,11 @@ public class Main {
         //prints menu options
 
         System.out.println("Choose your option:");
-        System.out.println("A. Add Room."); //call promptForDimension, which calls createRoom
-        System.out.println("V. View Room.");
-        System.out.println("R. Read Rooms from file.");
-        System.out.println("W. Write rooms to file.");
-        System.out.println("E. Exit program.");
+        System.out.println("1. Add Room.");
+        System.out.println("2. View Room.");
+        System.out.println("3. Read Rooms from file.");
+        System.out.println("4. Write rooms to file.");
+        System.out.println("5. Exit program.");
     }
 
     private static double promptForDimension(String dimensionName){
@@ -49,10 +49,12 @@ public class Main {
                 ObjectInputStream ois = new ObjectInputStream(fis);
         ) {
             paintcalculator = (PaintCalculator)ois.readObject();
+            System.out.println("Rooms read from file.");
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("Can't read file.");
         }
-        System.out.println("Rooms read from file.");
+
     }
 
     private static void writeFile() throws IOException {
@@ -63,7 +65,8 @@ public class Main {
             oos.writeObject(paintcalculator);
             System.out.println("Rooms written to file.");
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("Can't write file.");
         }
     }
 
@@ -73,19 +76,19 @@ public class Main {
         printMenu();
 
         String response = keyboard.nextLine();
-        if (response.equals("A")){
+        if (response.equals("1")){
             createRoom();
         }
-        else if (response.equals("V")){
+        else if (response.equals("2")){
             System.out.println(paintcalculator.toString());
         }
-        else if (response.equals("R")){
+        else if (response.equals("3")){
             readFile();
         }
-        else if (response.equals("W")){
+        else if (response.equals("4")){
             writeFile();
         }
-        else if (response.equals("E")){
+        else if (response.equals("5")){
             loop = false;
         }
     }
